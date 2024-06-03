@@ -11,3 +11,20 @@ function formatCurrency(number) {
         return number.toString();
     }
 }
+
+
+let summary = response.reduce((acc, curr) => {
+        if (!acc[curr.zone]) {
+            acc[curr.zone] = {
+                activeTIV: 0,
+                active_locations: 0,
+                prospectTIV: 0,
+                prospect_locations: 0
+            };
+        }
+        acc[curr.zone].activeTIV += curr.activeTIV;
+        acc[curr.zone].active_locations += curr.active_locations;
+        acc[curr.zone].prospectTIV += curr.prospectTIV;
+        acc[curr.zone].prospect_locations += curr.prospect_locations;
+        return acc;
+    }, {});
