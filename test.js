@@ -80,3 +80,6 @@ describe('EarthMovementBarChart Utilities', () => {
     });
   });
 });
+
+
+nx test my-app --testPathPattern=apps/my-app/src/hooks/useFetchEarthMovementBarAndAccordionData.test.tsx
