@@ -1,7 +1,11 @@
-function formatNumberWithM(value) {
-  if (value >= 1_000_000) {
-    return new Intl.NumberFormat('en-US').format((value / 1_000_000).toFixed(1)) + 'M';
-  } else {
-    return new Intl.NumberFormat('en-US').format(value);
-  }
+function formatCurrency(number) {
+    if (number >= 1000 && number < 1000000) {
+        return (number / 1000).toFixed(1) + 'K';
+    } else if (number >= 1000000 && number < 1000000000) {
+        return (number / 1000000).toFixed(1) + 'M';
+    } else if (number >= 1000000000) {
+        return (number / 1000000000).toFixed(1) + 'B';
+    } else {
+        return number.toString();
+    }
 }
