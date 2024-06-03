@@ -21,3 +21,5 @@ describe('NatHazOverview Component', () => {
     expect(screen.getByText('$1500.00')).toBeInTheDocument();
   });
 });
+
+git reset --soft HEAD~1
