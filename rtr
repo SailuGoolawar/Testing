@@ -1,0 +1,113 @@
+import { handleTitleClick } from './NatHazOverview';
+import { navigate } from 'react-router-dom';
+import { getNavigationUrl } from 'src/utils/navigation';
+import {
+  NatHazModuleUrlRouteEnum,
+} from '@btp/shared-ui';
+
+jest.mock('react-router-dom', () => ({
+  ...jest.requireActual('react-router-dom'),
+  navigate: jest.fn(),
+}));
+
+jest.mock('src/utils/navigation', () => ({
+  getNavigationUrl: jest.fn(),
+}));
+
+describe('handleTitleClick', () => {
+  const accountDetails = { orgid: '12345' };
+  const pathname = '/some/path';
+
+  beforeEach(() => {
+    jest.clearAllMocks();
+  });
+
+  it('navigates to Flood URL when Flood is enabled', () => {
+    const floodEnabled = true;
+    const windEnabled = false;
+    const earthquakeEnabled = false;
+    
+    handleTitleClick('Flood', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).toHaveBeenCalledWith({
+      locationPath: pathname,
+      orgId: accountDetails.orgid,
+      pageUrl: NatHazModuleUrlRouteEnum.FLOODURL,
+    });
+    expect(navigate).toHaveBeenCalled();
+  });
+
+  it('does not navigate to Flood URL when Flood is disabled', () => {
+    const floodEnabled = false;
+    const windEnabled = false;
+    const earthquakeEnabled = false;
+    
+    handleTitleClick('Flood', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('navigates to Wind URL when Wind is enabled', () => {
+    const floodEnabled = false;
+    const windEnabled = true;
+    const earthquakeEnabled = false;
+    
+    handleTitleClick('Wind', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).toHaveBeenCalledWith({
+      locationPath: pathname,
+      orgId: accountDetails.orgid,
+      pageUrl: NatHazModuleUrlRouteEnum.WINDURL,
+    });
+    expect(navigate).toHaveBeenCalled();
+  });
+
+  it('does not navigate to Wind URL when Wind is disabled', () => {
+    const floodEnabled = false;
+    const windEnabled = false;
+    const earthquakeEnabled = false;
+    
+    handleTitleClick('Wind', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('navigates to Earth Movement URL when Earth Movement is enabled', () => {
+    const floodEnabled = false;
+    const windEnabled = false;
+    const earthquakeEnabled = true;
+    
+    handleTitleClick('Earth Movement', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).toHaveBeenCalledWith({
+      locationPath: pathname,
+      orgId: accountDetails.orgid,
+      pageUrl: NatHazModuleUrlRouteEnum.EARTHURL,
+    });
+    expect(navigate).toHaveBeenCalled();
+  });
+
+  it('does not navigate to Earth Movement URL when Earth Movement is disabled', () => {
+    const floodEnabled = false;
+    const windEnabled = false;
+    const earthquakeEnabled = false;
+    
+    handleTitleClick('Earth Movement', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
+
+  it('does not navigate for unsupported title', () => {
+    const floodEnabled = true;
+    const windEnabled = true;
+    const earthquakeEnabled = true;
+    
+    handleTitleClick('Unsupported Title', floodEnabled, windEnabled, earthquakeEnabled, navigate, pathname, accountDetails);
+
+    expect(getNavigationUrl).not.toHaveBeenCalled();
+    expect(navigate).not.toHaveBeenCalled();
+  });
+});
