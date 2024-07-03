@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { render, screen, waitFor, fireEvent } from '@testing-library/react';
 import NatHazOverview from './NatHazOverview';
 import { useLocation } from 'react-router-dom';
 import {
@@ -41,135 +41,17 @@ jest.mock('src/hooks/useGetAccountDetails', () => ({
 
 jest.mock('src/hooks/useFetchEarthMovementBarData', () => ({
   __esModule: true,
-  default: jest.fn(() => {
-    const result: EarthMovementBarchartDTO = {
-      totalLocationCount: 4,
-      totalTIV: 200,
-      totalActiveLocationCount: 4,
-      totalActiveTIV: 200,
-      earthquake_frequency_zone_aggregates: [
-        {
-          zoneCode: '50',
-          zoneDescription: '50',
-          totalLocationCount: 4,
-          totalTIV: 200,
-          activeLocationCount: 4,
-          activeTIV: 200,
-          prospectLocationCount: 10,
-          prospectTIV: 10,
-        },
-      ],
-      earthquake_region_aggregates: [
-        {
-          regionCode: 'REGION1',
-          regionDescription: 'Region 1',
-          totalLocationCount: 4,
-          totalTIV: 200,
-          activeLocationCount: 4,
-          activeTIV: 200,
-        },
-      ],
-      as_of_date: '',
-      currency_type_id: null,
-      org_prospect_client_id: null,
-      riskQuality: 'Minimal',
-      activeLocationsRiskQuality: 'Minimal',
-    };
-    return result;
-  }),
+  default: jest.fn(),
 }));
 
 jest.mock('src/hooks/useFetchWindBarChartData', () => ({
   __esModule: true,
-  default: jest.fn(() => {
-    const result: WindBarChartDTO = {
-      as_of_date: '',
-      currency_type_id: null,
-      org_prospect_client_id: null,
-      totalLocationCount: 4,
-      totalTIV: 200,
-      totalActiveLocationCount: 4,
-      totalActiveTIV: 200,
-      windLossExpectancy: 100,
-      windLossActiveExpectancy: 110,
-      wind_region_aggregates: [
-        {
-          windRegion: 'North',
-          location_aggregates: {
-            totalInsuredValue: 3,
-            windLossExpectancy: 4,
-            locationCount: 5,
-          },
-          active_location_aggregates: {
-            totalInsuredValue: 1,
-            windLossExpectancy: 3,
-            locationCount: 5,
-          },
-          wind_tier_aggregates: [
-            {
-              underWritingWindTierCode: 'North',
-              underWritingWindTierDescription: 'severe',
-              totalLocationCount: 200,
-              totalTIV: 800,
-              windLossExpectancy: 100,
-    
-              activeLocationCount: 100,
-              activeTIV: 100,
-              windLossActiveExpectancy: 200,
-    
-              prospectTIV: 400,
-              windLossProspectExpectancy: 200,
-              prospectLocationCount: 300,
-            },
-          ],
-        },
-      ],
-      riskQuality: 'Minimal',
-      activeLocationsRiskQuality: 'Minimal',
-    };
-    return result;
-  }),
+  default: jest.fn(),
 }));
+
 jest.mock('src/hooks/useFetchFloodBarData', () => ({
   __esModule: true,
-  useFetchFloodBarAndAccordionData: jest.fn(() => {
-    const result: FloodBarChartDTO = {
-      org_prospect_client_id: 9966,
-      as_of_date: '2024-05-24',
-      currency_type_id: 47,
-      floodAggData: [
-        {
-          flood_hazard_frequency: 'High',
-          location_aggregates: {
-            total_insured_value: 10,
-            hundred_year_loss_expectancy: 10,
-            five_hundred_year_loss_expectancy: 10,
-            location_count: 10,
-          },
-          active_location_aggregates: {
-            total_insured_value: 10,
-            hundred_year_loss_expectancy: 10,
-            five_hundred_year_loss_expectancy: 10,
-            location_count: 10,
-          },
-          prospect_location_aggregates: {
-            total_insured_value: 10,
-            hundred_year_loss_expectancy: 10,
-            five_hundred_year_loss_expectancy: 10,
-            location_count: 10,
-          },
-        },
-      ],
-      totalLocationCount: 4,
-      totalTIV: 200,
-      totalActiveLocationCount: 4,
-      totalActiveTIV: 250,
-      riskQuality: 'Very Severe',
-      activeLocationsRiskQuality: 'Severe',
-    };
-
-    return result;
-  }),
+  useFetchFloodBarAndAccordionData: jest.fn(),
 }));
 
 jest.mock('src/common/contexts/HeaderContext', () => ({
